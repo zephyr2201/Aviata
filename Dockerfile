@@ -25,8 +25,3 @@ COPY Pipfile* ./
 RUN pipenv install --system --ignore-pipfile --dev
 
 COPY . /app
-
-COPY ./docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
-
-CMD ["/docker-entrypoint.sh"]
