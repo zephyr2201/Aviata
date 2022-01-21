@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+markdown = "*"
+djangorestframework = "*"
+django = "*"
+django-filter = "*"
+requests = "*"
+django-fsm = "*"
+celery = "==5.0.5"
+redis = "*"
+django-celery-beat = "*"
+django-celery-results = "*"
+psycopg2 = "*"
+beautifulsoup4 = "*"
+lxml = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"

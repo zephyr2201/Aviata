@@ -1,0 +1,55 @@
+version: '3'
+
+volumes:
+  postgres:
+
+services:
+  web:
+    build: .
+    command: /bin/sh -c 'python manage.py migrate && python manage.py runserver 0.0.0.0:9000'
+    volumes:
+      - .:/app
+    ports:
+      - '9000:9000'
+    environment:
+      - DB_HOST=postgres
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+      - postgres
+
+  celery-beat:
+    build: .
+    command: celery -A core.celery_app beat -l info
+    volumes:
+      - .:/app
+    environment:
+      - DB_HOST=postgres
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+      - celery-worker
+
+  celery-worker:
+    build: .
+    command: celery -A core.celery_app worker -l info
+    volumes:
+      - .:/app
+    environment:
+      - DB_HOST=postgres
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+
+  redis:
+    image: redis
+
+  postgres:
+    image: postgis/postgis
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=aviata
+      - POSTGRES_PASSWORD=aviata
+    ports:
+      - '5432:5432'
