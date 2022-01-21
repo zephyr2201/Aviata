@@ -23,7 +23,7 @@ def prepare_response_data(search_id: str, currency) -> Dict: # Results data
         return data
 
     supplemented_data = currency_translation(currency, results.get('data'))
-    data['items'] = supplemented_data
+    data['items'] = sorted(supplemented_data, key=lambda d: float(d.get('price')), reverse=True)
 
     return data
 
@@ -54,7 +54,7 @@ def currency_translation(currency: str, results: List) -> List:
         total = result.get('pricing').get('total')
         if cur == currency:
             result['price'] = {
-                    'amount': total,
+                    'amount': float(total),
                     'currency': currency
                     }
             continue
