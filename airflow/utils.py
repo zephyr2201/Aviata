@@ -23,7 +23,11 @@ def prepare_response_data(search_id: str, currency) -> Dict: # Results data
         return data
 
     supplemented_data = currency_translation(currency, results.get('data'))
-    data['items'] = sorted(supplemented_data, key=lambda d: float(d.get('price')), reverse=True)
+    data['items'] = sorted(
+        supplemented_data,
+        key=lambda d: float(d.get('price').get('amount')),
+        reverse=True
+    )
 
     return data
 
