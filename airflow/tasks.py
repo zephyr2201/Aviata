@@ -22,11 +22,11 @@ class ProviderSearchTask(Task):
 
     #Проверить курс для старта
     @staticmethod
-    def check_course():
+    def check_course() -> None:
         if not Currency.objects.last():
             request_for_currency()
 
-    def failed(self, error):
+    def failed(self, error: str):
         raise TaskFailed
     
     def success(self):

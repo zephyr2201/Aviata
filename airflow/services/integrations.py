@@ -3,6 +3,7 @@ import requests
 from urllib.error import HTTPError
 
 from django.urls import reverse
+from rest_framework.response import Response
 
 from airflow.models import Provider, SearchResult
 from airflow.services import ModelBasedService
@@ -43,7 +44,7 @@ class ProviderSearchService(ModelBasedService):
             return self.handle_500_exception(response)
         raise HTTPError(response.text)
 
-    def prepare_response_data(self, response):
+    def prepare_response_data(self, response: Response):
         try:
             return {'data': response.json()}
         except:

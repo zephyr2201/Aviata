@@ -1,11 +1,12 @@
 import json
 from typing import Dict, List
+from uuid import uuid4
 
 from airflow import ProvaiderSearchStatus
 from airflow.models import Currency, SearchResult, UUIDModel
 
 
-def create_search_id(search_id) -> UUIDModel:
+def create_search_id(search_id: uuid4) -> UUIDModel:
     obj = UUIDModel.objects.create(uuid=search_id)
     return obj
 
